@@ -137,6 +137,8 @@
 <button id="previousBtn">Anterior</button>
     <button id="nextBtn">Próximo</button>
   <button id="tela-cheia-button">Tela Cheia</button>
+  <button id="retrocede10s">-10 S</button>
+  <button id="avanca10s">+ 10 S</button>
   <input type="range" id="volume-range"min="0" max="1" step="0.1" value="1">
     <button class="toggle-button" onclick="toggleColumn()">Ocultar Playlist</button>
     
@@ -511,6 +513,30 @@
   var videoPlayer = document.getElementById("video-player");
   videoPlayer.addEventListener("loadedmetadata", updateTime);
 </script>
+
+    <script>
+        // Obtenha o elemento de vídeo e o botão
+        var meuVideo = document.getElementById("video-player");
+        var botaoAvanca10s = document.getElementById("avanca10s");
+
+        // Adicione um evento de clique ao botão
+        botaoAvanca10s.addEventListener("click", function() {
+            // Avance o vídeo em 10 segundos
+            meuVideo.currentTime += 10;
+        });
+    </script>
+    
+    <script>
+        // Obtenha o elemento de vídeo e o botão
+        var meuVideo = document.getElementById("video-player");
+        var botaoRetrocede10s = document.getElementById("retrocede10s");
+
+        // Adicione um evento de clique ao botão
+        botaoRetrocede10s.addEventListener("click", function() {
+            // Retroceda o vídeo em 10 segundos
+            meuVideo.currentTime -= 10;
+        });
+    </script>
 
 </body>
 </html>
