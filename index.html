@@ -208,12 +208,36 @@
     var videos = playlist.getElementsByTagName('a');
 
     function playVideo(index) {
-      if (index >= 0 && index < videos.length) {
-        var videoPlayer = document.getElementById('video-player');
-        var source = videos[index].getAttribute('href');
-        videoPlayer.src = source;
-        videoPlayer.load();
-        videoPlayer.play();
+  if (index >= 0 && index < videos.length) {
+    var videoPlayer = document.getElementById('video-player');
+    var source = videos[index].getAttribute('href');
+    videoPlayer.src = source;
+    
+    // Verifica se há um tempo salvo no armazenamento local
+    var savedTime = localStorage.getItem("videoTime");
+    if (savedTime) {
+      videoPlayer.currentTime = parseFloat(savedTime);
+      localStorage.removeItem("videoTime"); // Remove o tempo salvo após usá-lo
+    }
+    
+    videoPlayer.load();
+    videoPlayer.play();
+
+    const tabelaSecundariaCelula1 = document.querySelector('#primeira-celula');
+    tabelaSecundariaCelula1.textContent = `Você está assistindo: ${videos[index].textContent.trim()}`;
+
+    // Remove a classe 'selected' de todos os vídeos da playlist
+    for (var i = 0; i < videos.length; i++) {
+      videos[i].classList.remove('selected');
+    }
+
+    // Adiciona a classe 'selected' ao vídeo atual na playlist
+    videos[index].classList.add('selected');
+
+    currentIndex = index; // Atualiza o índice atual para corresponder ao vídeo reproduzido
+  }
+}
+
 
         const tabelaSecundariaCelula1 = document.querySelector('#primeira-celula');
         tabelaSecundariaCelula1.textContent = `Você está assistindo: ${videos[index].textContent.trim()}`;
@@ -445,6 +469,13 @@
   // Chama a função updateTime quando o vídeo é carregado
   var videoPlayer = document.getElementById("video-player");
   videoPlayer.addEventListener("loadedmetadata", updateTime);
+  
+  var videoPlayer = document.getElementById("video-player");
+
+videoPlayer.addEventListener("pause", function() {
+  localStorage.setItem("videoTime", videoPlayer.currentTime);
+});
+
 </script>
 
 </body>
