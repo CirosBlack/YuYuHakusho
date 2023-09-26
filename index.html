@@ -103,7 +103,6 @@
     }
   </style>
 
-
 </head>
 <body>
   <table id="tabela-principal" style="width: 100%;">
@@ -133,13 +132,12 @@
           </tr>
           <tr>
             <td id="quarta-celula">
-  <button id="play-button">Play</button>
+<button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px; border: none;">
+    </button>
 <button id="previousBtn">Anterior</button>
     <button id="nextBtn">Próximo</button>
   <button id="tela-cheia-button">Tela Cheia</button>
-<button id="retrocede10s" style="width: 50px; height: 30px; background: transparent; border: none;">
-    <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Retroceder.png" alt="Ícone de retroceder 10 segundos" style="width: 100%; height: 100%;">
-</button>
+<button id="retrocede10s">- 10 S</button>
   <button id="avanca10s">+ 10 S</button>
   <input type="range" id="volume-range"min="0" max="1" step="0.1" value="1">
     <button class="toggle-button" onclick="toggleColumn()">Ocultar Playlist</button>
@@ -346,21 +344,21 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const playButton = document.getElementById("play-button");
-    const telaCheiaButton = document.getElementById("tela-cheia-button");
-    const volumeRange = document.getElementById("volume-range");
-    const videoPlayer = document.getElementById("video-player");
+            const botaoReproduzir = document.getElementById("play-button");
+            const botaoTelaCheia = document.getElementById("tela-cheia-button");
+            const faixaVolume = document.getElementById("volume-range");
+            const reprodutorVideo = document.getElementById("video-player");
 
-    playButton.addEventListener("click", function() {
-      if (videoPlayer.paused) {
-        videoPlayer.play();
-        playButton.textContent = "Pausar";
-      } else {
-        videoPlayer.pause();
-        playButton.textContent = "Play";
-      }
-    });
-
+            botaoReproduzir.addEventListener("click", function() {
+                if (reprodutorVideo.paused) {
+                    reprodutorVideo.play();
+                    botaoReproduzir.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Pause.png" alt="Ícone Pausar" style="width: 50px; height: 50px; border: none;">';
+                } else {
+                    reprodutorVideo.pause();
+                    botaoReproduzir.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px; border: none;">';
+                }
+            });
+       
     telaCheiaButton.addEventListener("click", function() {
       if (videoPlayer.requestFullscreen) {
         videoPlayer.requestFullscreen();
