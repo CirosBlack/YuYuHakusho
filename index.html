@@ -132,7 +132,7 @@
             padding: 0; /* Remove o preenchimento interno */
         }
     </style>
-    
+
 </head>
 <body>
   <table id="tabela-principal" style="width: 100%;">
@@ -145,7 +145,7 @@
           <tr>
             <td style="border: 1px solid black;">
               <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
-                <video id="video-player" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"  controls autoplay>
+                <video id="video-player" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" preload="auto" controls autoplay>
                   <source src="" type="video/mp4">
                 </video>
               </div>
@@ -162,7 +162,7 @@
           </tr>
           <tr>
             <td id="quarta-celula">
-<button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+  <button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
 <button id="previousBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Anterior.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
 <button id="nextBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Proximo.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button></button>
   <button id="tela-cheia-button">Tela Cheia</button>
@@ -177,7 +177,7 @@
       <td class="coluna-2" style="border: 1px solid black;">
         <div class="playlist" id="playlist">
         <ul>
-<li><a href="https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/01_A_morte.mp4"><img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_morte.jpg"> A Morte</a></li>
+  <li><a href="https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/01_A_morte.mp4"><img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_morte.jpg"> A Morte</a></li>
 <li><a href="https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/02_No_mundo_Espiritual_Teste_da_Ressurreicao.mp4"><img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/No_Mundo_Espiritual_-_Teste_da_Ressurreicao.jpg"> No Mundo Espiritual - Teste da Ressurreição</a></li>
 <li><a href="https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/03_A_Promessa_de_um_Homem.mp4"><img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Promessa_de_um_Homem.jpg"> A Promessa de um Homem</a></li>
 <li><a href="https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/04_O_Fogo_Ardente.mp4"><img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Fogo_Ardente.jpg"> O Fogo Ardente</a></li>
@@ -373,21 +373,22 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-            const botaoReproduzir = document.getElementById("play-button");
-            const botaoTelaCheia = document.getElementById("tela-cheia-button");
-            const faixaVolume = document.getElementById("volume-range");
-            const reprodutorVideo = document.getElementById("video-player");
+    const playButton = document.getElementById("play-button");
+    const telaCheiaButton = document.getElementById("tela-cheia-button");
+    const volumeRange = document.getElementById("volume-range");
+    const videoPlayer = document.getElementById("video-player");
 
-            botaoReproduzir.addEventListener("click", function() {
-                if (reprodutorVideo.paused) {
-                    reprodutorVideo.play();
-                    botaoReproduzir.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Pause.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
+    playButton.addEventListener("click", function() {
+      if (videoPlayer.paused) {
+        videoPlayer.play();
+        playButton.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Pause.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
                 } else {
-                    reprodutorVideo.pause();
+        videoPlayer.pause();
                     botaoReproduzir.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;">';
                 }
-            });
-       
+		   });
+    
+
     telaCheiaButton.addEventListener("click", function() {
       if (videoPlayer.requestFullscreen) {
         videoPlayer.requestFullscreen();
@@ -543,7 +544,7 @@
   videoPlayer.addEventListener("loadedmetadata", updateTime);
 </script>
 
-    <script>
+<script>
         // Obtenha o elemento de vídeo e o botão
         var meuVideo = document.getElementById("video-player");
         var botaoAvanca10s = document.getElementById("avanca10s");
