@@ -89,10 +89,10 @@
     
     if (coluna2.style.display === 'none') {
       coluna2.style.display = 'table-cell';
-      button.innerHTML = "Ocultar Playlist";
+      button.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Playlist01.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
     } else {
       coluna2.style.display = 'none';
-      button.innerHTML = "Mostrar Playlist";
+      button.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Playlist02.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
     }
   }
 </script>
@@ -100,6 +100,10 @@
 <style>
     .toggle-button {
       float: right;
+      background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
     }
   </style>
 
@@ -178,8 +182,8 @@
   <button id="tela-cheia-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tela.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
 <button id="retrocede10s">- 10 S</button>
   <button id="avanca10s">+ 10 S</button>
-  <input type="range" id="volume-range"min="0" max="1" step="0.1" value="1">
-    <button class="toggle-button" onclick="toggleColumn()">Ocultar Playlist</button>
+ <input type="range" id="volume-range"min="0" max="1" step="0.1" value="1">
+    <button class="toggle-button" onclick="toggleColumn()"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Playlist01.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
     
 </td>
         </table>
