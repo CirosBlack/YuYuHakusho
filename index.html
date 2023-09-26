@@ -643,13 +643,15 @@
 
             // Função para salvar o ponto de reprodução atual
             function salvarProgressoAutomaticamente() {
+                localStorage.setItem("videoAtual", video.src);
                 localStorage.setItem("pontoReproducao", video.currentTime.toString());
             }
 
-            // Verificar se há um ponto de reprodução salvo
+            // Verificar se há um ponto de reprodução salvo e um vídeo atual
             const pontoReproducaoSalvo = localStorage.getItem("pontoReproducao");
+            const videoAtualSalvo = localStorage.getItem("videoAtual");
 
-            if (pontoReproducaoSalvo) {
+            if (pontoReproducaoSalvo && videoAtualSalvo === video.src) {
                 video.addEventListener("loadedmetadata", function () {
                     // Garante que o vídeo esteja carregado antes de definir o tempo
                     video.currentTime = parseFloat(pontoReproducaoSalvo);
