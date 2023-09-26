@@ -99,7 +99,6 @@
 
 <style>
     .toggle-button {
-      float: right;
       background-color: black; /* Define a cor de fundo como preto */
             border: none; /* Remove a borda */
             margin: 0; /* Remove a margem */
@@ -167,6 +166,25 @@
         }
     </style>
     
+     <style>
+        /* Estilo para o botão */
+        #mostrar-controle {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
+    <style>
+        #volume-range {
+            display: none; /* Inicia oculto */
+            float: right; /* Alinha à direita */
+            opacity: 0; /* Inicia com opacidade 0 para o fade */
+            transition: opacity 0.5s; /* Adiciona uma transição suave de 0.5 segundos */
+        }
+    </style>
+    
 </head>
 <body>
   <table id="tabela-principal" style="width: 100%;">
@@ -202,8 +220,9 @@
 <button id="nextBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
 <button id="avanca10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
 <button id="tela-cheia-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tela.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<input type="range" id="volume-range"min="0" max="1" step="0.1" value="1">
 <button class="toggle-button" onclick="toggleColumn()"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>  
+ <button id="mostrar-controle"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Volume.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+    <input type="range" id="volume-range" min="0" max="1" step="0.1" value="1">
 </td>
         </table>
       </td>
@@ -326,6 +345,25 @@
       </td>
     </tr>
   </table>
+
+<script>
+        const botaoMostrar = document.getElementById('mostrar-controle');
+        const controleVolume = document.getElementById('volume-range');
+
+        botaoMostrar.addEventListener('click', () => {
+            if (controleVolume.style.display === 'none' || controleVolume.style.opacity === '0') {
+                controleVolume.style.display = 'block';
+                setTimeout(() => {
+                    controleVolume.style.opacity = '1';
+                }, 10); // Aguarda um pequeno atraso para a transição suave funcionar
+            } else {
+                controleVolume.style.opacity = '0';
+                setTimeout(() => {
+                    controleVolume.style.display = 'none';
+                }, 500); // Aguarda a conclusão da transição antes de ocultar definitivamente
+            }
+        });
+    </script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
