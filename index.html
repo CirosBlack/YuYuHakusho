@@ -99,6 +99,7 @@
 
 <style>
     .toggle-button {
+    	float: right;
       background-color: black; /* Define a cor de fundo como preto */
             border: none; /* Remove a borda */
             margin: 0; /* Remove a margem */
@@ -178,8 +179,6 @@
     
     <style>
         #volume-range {
-            display: none; /* Inicia oculto */
-            float: right; /* Alinha à direita */
             opacity: 0; /* Inicia com opacidade 0 para o fade */
             transition: opacity 0.5s; /* Adiciona uma transição suave de 0.5 segundos */
         }
@@ -351,16 +350,10 @@
         const controleVolume = document.getElementById('volume-range');
 
         botaoMostrar.addEventListener('click', () => {
-            if (controleVolume.style.display === 'none' || controleVolume.style.opacity === '0') {
-                controleVolume.style.display = 'block';
-                setTimeout(() => {
-                    controleVolume.style.opacity = '1';
-                }, 10); // Aguarda um pequeno atraso para a transição suave funcionar
+            if (controleVolume.style.opacity === '0') {
+                controleVolume.style.opacity = '1';
             } else {
                 controleVolume.style.opacity = '0';
-                setTimeout(() => {
-                    controleVolume.style.display = 'none';
-                }, 500); // Aguarda a conclusão da transição antes de ocultar definitivamente
             }
         });
     </script>
