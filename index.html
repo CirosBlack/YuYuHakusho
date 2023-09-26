@@ -636,5 +636,44 @@
         });
     </script>
 
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const video = document.getElementById("video-player");
+            const playlistItems = document.querySelectorAll(".playlist ul li");
+
+            // Função para salvar o ponto de reprodução atual
+            function salvarProgressoAutomaticamente() {
+                localStorage.setItem("pontoReproducao", video.currentTime.toString());
+            }
+
+            // Verificar se há um ponto de reprodução salvo
+            const pontoReproducaoSalvo = localStorage.getItem("pontoReproducao");
+
+            if (pontoReproducaoSalvo) {
+                video.addEventListener("loadedmetadata", function () {
+                    // Garante que o vídeo esteja carregado antes de definir o tempo
+                    video.currentTime = parseFloat(pontoReproducaoSalvo);
+                });
+            }
+
+            // Evento para salvar automaticamente o ponto de reprodução quando o tempo muda
+            video.addEventListener("timeupdate", salvarProgressoAutomaticamente);
+
+            // Evento para mudar o vídeo na playlist quando um item da lista é clicado
+            playlistItems.forEach(item => {
+                item.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const videoSource = item.getAttribute("data-src");
+                    video.src = videoSource;
+                    video.play();
+                });
+            });
+
+            // Evento para limpar o ponto de reprodução salvo quando o vídeo termina
+            video.addEventListener("ended", () => {
+                localStorage.removeItem("pontoReproducao");
+            });
+        });
+    </script>
 </body>
 </html>
