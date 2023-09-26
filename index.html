@@ -209,7 +209,6 @@
     <div id="time" style="color: #fff; float: right; font-size: 12px;"></div>
   </div>
 </td>
-
           </tr>
           <tr>
             <td id="quarta-celula">
@@ -223,8 +222,13 @@
  <button id="mostrar-controle"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Volume.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
     <input type="range" id="volume-range" min="0" max="1" step="0.1" value="1">
 </td>
+</tr>
+<tr>
+	<td id="quinta celula">
+	
+		</td>
+		</tr>
         </table>
-      </td>
       <td class="coluna-2" style="border: 1px solid black;">
         <div class="playlist" id="playlist">
         <ul>
@@ -344,7 +348,7 @@
       </td>
     </tr>
   </table>
-
+  
 <script>
         const botaoMostrar = document.getElementById('mostrar-controle');
         const controleVolume = document.getElementById('volume-range');
@@ -631,6 +635,42 @@
             meuVideo.currentTime -= 10;
         });
     </script>
+
+<script>
+        const video = document.getElementById("video-player");
+        const playlistItems = document.querySelectorAll(".playlist ul li");
+        
+        // Função para salvar o ponto de reprodução atual
+        function salvarProgressoAutomaticamente() {
+            localStorage.setItem("pontoReproducao", video.currentTime.toString());
+        }
+
+        // Verificar se há um ponto de reprodução salvo
+        const pontoReproducaoSalvo = localStorage.getItem("pontoReproducao");
+
+        if (pontoReproducaoSalvo) {
+            video.currentTime = parseFloat(pontoReproducaoSalvo);
+        }
+
+        // Evento para salvar automaticamente o ponto de reprodução quando o tempo muda
+        video.addEventListener("timeupdate", salvarProgressoAutomaticamente);
+
+        // Evento para mudar o vídeo na playlist quando um item da lista é clicado
+        playlistItems.forEach(item => {
+            item.addEventListener("click", (event) => {
+                event.preventDefault();
+                const videoSource = item.getAttribute("data-src");
+                video.src = videoSource;
+                video.play();
+            });
+        });
+
+        // Evento para limpar o ponto de reprodução salvo quando o vídeo termina
+        video.addEventListener("ended", () => {
+            localStorage.removeItem("pontoReproducao");
+        });
+    </script>
+    
 
 </body>
 </html>
