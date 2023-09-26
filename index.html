@@ -103,6 +103,16 @@
     }
   </style>
 
+<style>
+        /* Estilo para o botão */
+        #play-button {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
 </head>
 <body>
   <table id="tabela-principal" style="width: 100%;">
@@ -132,7 +142,7 @@
           </tr>
           <tr>
             <td id="quarta-celula">
-<button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px; border: none;">
+<button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;">
     </button>
 <button id="previousBtn">Anterior</button>
     <button id="nextBtn">Próximo</button>
@@ -352,10 +362,10 @@
             botaoReproduzir.addEventListener("click", function() {
                 if (reprodutorVideo.paused) {
                     reprodutorVideo.play();
-                    botaoReproduzir.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Pause.png" alt="Ícone Pausar" style="width: 50px; height: 50px; border: none;">';
+                    botaoReproduzir.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Pause.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
                 } else {
                     reprodutorVideo.pause();
-                    botaoReproduzir.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px; border: none;">';
+                    botaoReproduzir.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;">';
                 }
             });
        
