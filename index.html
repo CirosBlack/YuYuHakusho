@@ -89,10 +89,10 @@
     
     if (coluna2.style.display === 'none') {
       coluna2.style.display = 'table-cell';
-      button.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Playlist01.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
+      button.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
     } else {
       coluna2.style.display = 'none';
-      button.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Playlist02.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
+      button.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Mostar_Playlist.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
     }
   }
 </script>
@@ -147,6 +147,26 @@
         }
     </style>
 
+    <style>
+        /* Estilo para o botão */
+        #retrocede10s {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
+        <style>
+        /* Estilo para o botão */
+        #avanca10s {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
 </head>
 <body>
   <table id="tabela-principal" style="width: 100%;">
@@ -176,15 +196,14 @@
           </tr>
           <tr>
             <td id="quarta-celula">
-  <button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button id="previousBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Anterior.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button id="nextBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Proximo.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-  <button id="tela-cheia-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tela.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button id="retrocede10s">- 10 S</button>
-  <button id="avanca10s">+ 10 S</button>
- <input type="range" id="volume-range"min="0" max="1" step="0.1" value="1">
-    <button class="toggle-button" onclick="toggleColumn()"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Playlist01.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-    
+ <button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="retrocede10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Voltar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="previousBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Voltar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="nextBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="avanca10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="tela-cheia-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tela.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<input type="range" id="volume-range"min="0" max="1" step="0.1" value="1">
+<button class="toggle-button" onclick="toggleColumn()"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>  
 </td>
         </table>
       </td>
