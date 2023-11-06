@@ -132,8 +132,88 @@
     border: 1px solid black;
     padding: 5px;
   }
-  
+
 </style>
+
+<style>
+    .toggle-button {
+    	float: right;
+      background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+    }
+  </style>
+
+<style>
+        /* Estilo para o botão */
+        #play-button {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
+    <style>
+        /* Estilo para o botão */
+        #previousBtn {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
+        <style>
+        /* Estilo para o botão */
+        #nextBtn {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
+    <style>
+        /* Estilo para o botão */
+        #tela-cheia-button {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+
+    <style>
+        /* Estilo para o botão */
+        #retrocede10s {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
+        <style>
+        /* Estilo para o botão */
+        #avanca10s {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
+    
+     <style>
+        /* Estilo para o botão */
+        #mostrar-controle {
+            background-color: black; /* Define a cor de fundo como preto */
+            border: none; /* Remove a borda */
+            margin: 0; /* Remove a margem */
+            padding: 0; /* Remove o preenchimento interno */
+        }
+    </style>
 
 </head>
 <body>
@@ -214,11 +294,53 @@
     </table>
     
     <script>
+// Obtém os elementos do HTML
+var videoPlayer = document.getElementById("video-player");
+var previousBtn = document.getElementById("previousBtn");
+var nextBtn = document.getElementById("nextBtn");
+var playlist = document.getElementById("playlist");
+
+// Cria um array com os URLs dos vídeos
+var videos = [];
+for (var i = 0; i < playlist.children.length; i++) {
+  var videoUrl = playlist.children[i].children[0].getAttribute("onclick").slice(11, -2);
+  videos.push(videoUrl);
+}
+
+// Define o índice do vídeo atual
+var currentIndex = 0;
+
+// Define uma função para avançar para o próximo vídeo
+function playNext() {
+  // Incrementa o índice
+  currentIndex++;
+  // Se o índice for maior que o tamanho do array, volta para o primeiro vídeo
+  if (currentIndex >= videos.length) {
+    currentIndex = 0;
+  }
+  // Altera o atributo src do video-player para o próximo vídeo
+  videoPlayer.setAttribute("src", videos[currentIndex]);
+}
+
+// Define uma função para voltar para o vídeo anterior
+function playPrevious() {
+  // Decrementa o índice
+  currentIndex--;
+  // Se o índice for menor que zero, vai para o último vídeo
+  if (currentIndex < 0) {
+    currentIndex = videos.length - 1;
+  }
+  // Altera o atributo src do video-player para o vídeo anterior
+  videoPlayer.setAttribute("src", videos[currentIndex]);
+}
+
+// Adiciona eventos de clique aos botões
+previousBtn.addEventListener("click", playPrevious);
+nextBtn.addEventListener("click", playNext);
 
 </script>
     
-    <script>
-    	
+    <script>
      // Obtenha o elemento de vídeo e o botão
         var meuVideo = document.getElementById("video-player");
         var botaoAvanca10s = document.getElementById("avanca10s");
