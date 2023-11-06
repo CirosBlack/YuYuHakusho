@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>CirosBlack - Jaspion</title>
+	<title>CirosBlack - Yu Yu Hakusho</title>
 	<link rel="shortcut icon" href="https://raw.githubusercontent.com/CirosBlack/jaspion/main/favicon.ico" type="image/x-icon">
 	<style>
     body {
@@ -175,15 +175,74 @@ function adjustPlaylistHeight() {
   // Aplica a altura do vídeo à playlist
   playlist.style.height = videoHeight + "px";
 }
+
+
 </script>
 </head>
 <body>
 <!-- Player de vídeo -->
-<video id="video-player" class="video-player" controls autoplay onended="playNext()"> <!-- Adiciona os atributos autoplay e onended -->
+<video id="video-player" class="video-player" controls autoplay onended="playNext()" preload="metadata"> <!-- Adiciona os atributos autoplay, onended e preload -->
   <!-- Vídeo padrão -->
   <source src="https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/01_A_morte.mp4" type="video/mp4">
   Seu navegador não suporta o elemento de vídeo.
 </video>
+<div>
+  <input id="range" type="range" value="0" max="1000" style="width: 100%;">
+</div>
+<p id="video-name">Você está assistindo: </p> <!-- Adiciona um elemento p com um id -->
+<script>
+  // Seleciona o elemento video e o elemento p
+  var video = document.getElementById("video-player");
+  var videoName = document.getElementById("video-name");
+
+  // Cria uma função para atualizar o texto do elemento p com o título do vídeo
+  function updateVideoName() {
+    // Obtém o título do vídeo a partir dos metadados
+    var title = video.currentSrc.split("/").pop().split(".")[0];
+    // Substitui os underscores por espaços
+    title = title.replace(/_/g, " ");
+    // Atualiza o texto do elemento p
+    videoName.textContent = "Você está assistindo: " + title;
+  }
+
+  // Chama a função quando o vídeo for carregado
+  video.addEventListener("loadedmetadata", updateVideoName);
+
+  // Chama a função quando o vídeo for alterado
+  video.addEventListener("change", updateVideoName);
+  
+  // Cria uma função para atualizar o texto do elemento p com o título do vídeo
+function updateVideoName() {
+  // Obtém o título do vídeo a partir dos metadados
+  var title = video.currentSrc.split("/").pop().split(".")[0];
+  // Substitui os underscores por espaços
+  title = title.replace(/_/g, " ");
+  // Substitui os números por uma string vazia
+  title = title.replace(/\d+/g, "");
+  // Atualiza o texto do elemento p
+  videoName.textContent = "Você está assistindo: " + title;
+}
+
+</script>
+ 
+  <script>
+// JavaScript
+var video = document.getElementById("video-player");
+var range = document.getElementById("range");
+video.controls = false; // desabilita os controles padrões do vídeo
+range.addEventListener("mousedown", function(event) {
+  video.pause(); // pausa o vídeo quando o usuário clica no range
+});
+range.addEventListener("change", function(event) {
+  video.currentTime = range.value / range.max * video.duration; // altera o tempo do vídeo de acordo com o valor do range
+  video.play(); // reproduz o vídeo
+});
+video.addEventListener("timeupdate", function(event) {
+  var position = this.currentTime / this.duration; // calcula a posição atual do vídeo em relação à duração
+  range.value = position * 1000; // atualiza o valor do range
+});
+
+</script>
 <!-- Playlist -->
 <ul id="playlist" class="playlist"> <!-- Adiciona o atributo id -->
   <!-- Itens da playlist -->
