@@ -112,7 +112,7 @@
   /* Define a largura das colunas em modo paisagem */
   @media (orientation: landscape) {
     .container {
-      grid-template-columns: 70% 30%;
+      grid-template-columns: 100% 30%;
       grid-gap: 10px;
     }
   }
@@ -136,7 +136,7 @@
 </style>
 
 <style>
-    .toggle-button {
+    .OctPlay {
     	float: right;
       background-color: black; /* Define a cor de fundo como preto */
             border: none; /* Remove a borda */
@@ -212,7 +212,9 @@
             border: none; /* Remove a borda */
             margin: 0; /* Remove a margem */
             padding: 0; /* Remove o preenchimento interno */
-        }
+        }
+
+
     </style>
 
 </head>
@@ -238,8 +240,10 @@
 <button id="nextBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
 <button id="avanca10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
 <button id="tela-cheia-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tela.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button class="toggle-button" onclick="toggleColumn()"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>  
+<button class="OctPlay"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>  
 <button id="mostrar-controle"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Volume.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<input type="range" id="controle-volume" min="0" max="1" step="0.01" value="1" style="display: none;">
+	
 </table>
    </td>
   </tr>
@@ -292,6 +296,81 @@
         </li>
     </ul>
     </table>
+    
+    <script>
+    	
+  // Função para ocultar e mostrar um elemento pelo seu id ou classe
+function ocultarMostrarElemento (seletor) {
+  // Seleciona o elemento pelo seu seletor
+  var elemento = document.querySelector (seletor);
+  // Verifica o estado atual do elemento
+  var display = elemento.style.display;
+  // Alterna entre ocultar e mostrar
+  if (display == "none") {
+    elemento.style.display = "block";
+  } else {
+    elemento.style.display = "none";
+  }
+}
+
+// Seleciona o botão e a playlist pelo seu id ou classe
+var botao = document.querySelector(".OctPlay");
+var playlist = document.querySelector("#playlist");
+
+// Define as imagens para mostrar e ocultar a playlist
+var mostrar = "https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Mostar_Playlist.png";
+var ocultar = "https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png";
+
+// Adiciona um evento de clique ao botão
+botao.addEventListener("click", function() {
+  // Alterna a visibilidade da playlist
+  playlist.classList.toggle("playlist");
+  // Muda a imagem do botão de acordo com o estado da playlist
+  if (playlist.classList.contains("playlist")) {
+    botao.src = ocultar;
+    // Chama a função para ocultar a tabela, a lista e as miniaturas
+    ocultarMostrarElemento ("#tabela-playlist");
+    ocultarMostrarElemento ("#playlist");
+    ocultarMostrarElemento (".thumb");
+  } else {
+    botao.src = mostrar;
+    // Chama a função para mostrar a tabela, a lista e as miniaturas
+    ocultarMostrarElemento ("#tabela-playlist");
+    ocultarMostrarElemento ("#playlist");
+    ocultarMostrarElemento (".thumb");
+  }
+});
+
+</script>
+    
+    <script>
+  // Obtém os elementos do HTML
+var videoPlayer = document.getElementById("video-player");
+var mostrarControle = document.getElementById("mostrar-controle");
+var controleVolume = document.getElementById("controle-volume");
+
+// Define uma função para mostrar ou esconder o controle de volume
+function toggleControle() {
+  // Se o controle de volume estiver visível, esconde ele
+  if (controleVolume.style.display == "block") {
+    controleVolume.style.display = "none";
+  }
+  // Se o controle de volume estiver escondido, mostra ele
+  else {
+    controleVolume.style.display = "block";
+  }
+}
+
+// Adiciona um evento de click ao botão mostrar-controle
+mostrarControle.addEventListener("click", toggleControle);
+
+// Adiciona um evento de input ao controle de volume
+controleVolume.addEventListener("input", function() {
+  // Altera o volume do video-player de acordo com o valor do controle de volume
+  videoPlayer.volume = controleVolume.value;
+});
+
+    	</script>
     
     <script>
 // Obtém os elementos do HTML
@@ -477,6 +556,8 @@ video.addEventListener('contextmenu', event => event.preventDefault());
             }
           }
         }
+        
+        
     </script>
 </body>
 </html>
