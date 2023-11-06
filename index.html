@@ -67,6 +67,10 @@
           object-fit: cover;
         }
         
+        #video-player::-webkit-media-controls {
+  display: none !important;
+}    
+        
          /* Estilo do player de vídeo */
     .video-player {
       width: 100%; /* Ocupa 100% da largura da página */
@@ -100,7 +104,7 @@
 </style>
 
 <style>
-  /* Define o container como um grid */
+  /* Define o container 100% um grid */
   .container {
     display: grid;
   }
@@ -147,10 +151,19 @@
     <div>
         <input id="range" type="range" value="0" max="1000" style="width: 100%;">
     </div>
+    <table id="BtnCtrl">
+<button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="retrocede10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Voltar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="previousBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Voltar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="nextBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="avanca10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button id="tela-cheia-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tela.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+<button class="toggle-button" onclick="toggleColumn()"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>  
+<button id="mostrar-controle"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Volume.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
+</table>
    </td>
   </tr>
     </table>
-    
     
     <table id="tabela-playlist" style="width: 100%;">
      <!-- Playlist -->
@@ -199,7 +212,90 @@
         </li>
     </ul>
     </table>
+    
     <script>
+
+</script>
+    
+    <script>
+    	
+     // Obtenha o elemento de vídeo e o botão
+        var meuVideo = document.getElementById("video-player");
+        var botaoAvanca10s = document.getElementById("avanca10s");
+
+        // Adicione um evento de clique ao botão
+        botaoAvanca10s.addEventListener("click", function() {
+            // Avance o vídeo em 10 segundos
+            meuVideo.currentTime += 10;
+        });
+    </script>
+    
+    <script>
+        // Obtenha o elemento de vídeo e o botão
+        var meuVideo = document.getElementById("video-player");
+        var botaoRetrocede10s = document.getElementById("retrocede10s");
+
+        // Adicione um evento de clique ao botão
+        botaoRetrocede10s.addEventListener("click", function() {
+            // Retroceda o vídeo em 10 segundos
+            meuVideo.currentTime -= 10;
+        });
+    </script>
+    
+    <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const playButton = document.getElementById("play-button");
+    const telaCheiaButton = document.getElementById("tela-cheia-button");
+    const volumeRange = document.getElementById("volume-range");
+    const videoPlayer = document.getElementById("video-player");
+
+    playButton.addEventListener("click", function() {
+      if (videoPlayer.paused) {
+        videoPlayer.play();
+        playButton.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Pause.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
+                } else {
+        videoPlayer.pause();
+                    playButton.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;">';
+                }
+		   });
+    
+    telaCheiaButton.addEventListener("click", function() {
+      if (videoPlayer.requestFullscreen) {
+        videoPlayer.requestFullscreen();
+      } else if (videoPlayer.mozRequestFullScreen) { // Firefox
+        videoPlayer.mozRequestFullScreen();
+      } else if (videoPlayer.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        videoPlayer.webkitRequestFullscreen();
+      } else if (videoPlayer.msRequestFullscreen) { // IE/Edge
+        videoPlayer.msRequestFullscreen();
+      }
+    });
+
+    volumeRange.addEventListener("input", function() {
+      videoPlayer.volume = volumeRange.value;
+    });
+  });
+  </script>
+  
+  <script>
+        const botaoMostrar = document.getElementById('mostrar-controle');
+        const controleVolume = document.getElementById('volume-range');
+
+        botaoMostrar.addEventListener('click', () => {
+            if (controleVolume.style.opacity === '0') {
+                controleVolume.style.opacity = '1';
+            } else {
+                controleVolume.style.opacity = '0';
+            }
+        });
+    </script>
+    
+    <script>
+// JavaScript desabilita o mouse no vídeo  	
+var video = document.getElementById("video-player");
+video.addEventListener('contextmenu', event => event.preventDefault());
+
+
      // JavaScript Range Barra de progresso 
         var video = document.getElementById("video-player");
         var range = document.getElementById("range");
