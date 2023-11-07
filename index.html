@@ -1,608 +1,1 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
- <meta charset="UTF-8">
- <title>CirosBlack - Yu Yu Hakusho</title>
- <style>
-  body { 
-          font-family: "Arial Black", Arial, sans-serif;   
-          font-weight: bold;    
-          text-transform: uppercase;   
-          color: #fff; 
-          background-color: #1C1C1C;  
-        } 
-        
-        .playlist {    
-          width: 95%; 
-          height: 100%;
-          overflow: auto;  
-          background-color: black;  
-          color: #fff; 
-          padding: 10px; 
-        }
-         
-        .playlist ul { 
-          list-style-type: none;  
-          padding-left: 0;   
-          margin-top: 0;  
-        }
-       
-        .playlist a { 
-          display: flex; 
-          align-items: center;
-          margin-bottom: 5px;
-          background-color: #1C1C1C;
-          padding: 5px;
-          cursor: pointer;  
-          text-decoration: none;  
-          border-radius: 10px;  
-          border: 1px solid #fff;    
-          color: #ccc;
-    	  width: 100%;
-        }
-    
-        .playlist a:hover {
-          background-color: #666;
-        }
-    
-        .playlist a.selected {
-          background-color: #800000;
-          color: #fff;
-          border-color: #fff;
-        }
-      
-        .playlist video {
-          width: 100%;   
-          height: 0;    
-          padding-bottom: 75%;  
-          border-radius: 10px;    
-          border: 1px solid #fff;    
-        }
-     
-        .playlist .thumbnail {
-          width: 100px;
-          height: 70px;
-          margin-right: 10px;
-          border-radius: 5%;
-          object-fit: cover;
-        }
-        
-        #video-player::-webkit-media-controls {
-  display: none !important;
-}    
-        
-         /* Estilo do player de vídeo */
-    .video-player {
-      width: 100%; /* Ocupa 100% da largura da página */
-      height: auto; /* Ajusta a altura proporcionalmente */
-    }
-    /* Estilo da playlist */
-    .playlist {
-      width: 100%; /* Ocupa 100% da largura da página */
-      height: auto; /* Ajusta a altura proporcionalmente */
-      overflow-y: scroll; /* Permite rolar na vertical */
-      list-style: none; /* Remove os marcadores dos itens */
-      margin: 0; /* Remove as margens */
-      padding: 0; /* Remove o espaçamento interno */
-    }
-    
-    /* Estilo dos itens da playlist */
-    .playlist li {
-      display: flex; /* Organiza os elementos em linha */
-      align-items: center; /* Alinha os elementos verticalmente */
-      border-bottom: 1px solid #ccc; /* Adiciona uma borda inferior */
-    }
-    
-    /* Estilo das imagens da playlist */
-    .playlist img {
-      width: 150px; /* Largura fixa */
-      height: auto; /* Ajusta a altura proporcionalmente */
-      margin-right: 10px; /* Espaçamento à direita */
-    }
-    
-    
-</style>
-
-<style>
-  /* Define o container 100% um grid */
-  .container {
-    display: grid;
-  }
-
-  /* Define a largura das colunas em modo paisagem */
-  @media (orientation: landscape) {
-    .container {
-      grid-template-columns: 100% 30%;
-      grid-gap: 10px;
-    }
-  }
-
-  /* Define a altura das linhas */
-  .container > table {
-    grid-template-rows: auto;
-  }
-
-  /* Define os estilos das tabelas */
-  table {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-
-  th, td {
-    border: 1px solid black;
-    padding: 5px;
-  }
-
-</style>
-
-<style>
-    .OctPlay {
-    	float: right;
-      background-color: black; /* Define a cor de fundo como preto */
-            border: none; /* Remove a borda */
-            margin: 0; /* Remove a margem */
-            padding: 0; /* Remove o preenchimento interno */
-    }
-  </style>
-
-<style>
-        /* Estilo para o botão */
-        #play-button {
-            background-color: black; /* Define a cor de fundo como preto */
-            border: none; /* Remove a borda */
-            margin: 0; /* Remove a margem */
-            padding: 0; /* Remove o preenchimento interno */
-        }
-    </style>
-    
-    <style>
-        /* Estilo para o botão */
-        #previousBtn {
-            background-color: black; /* Define a cor de fundo como preto */
-            border: none; /* Remove a borda */
-            margin: 0; /* Remove a margem */
-            padding: 0; /* Remove o preenchimento interno */
-        }
-    </style>
-    
-        <style>
-        /* Estilo para o botão */
-        #nextBtn {
-            background-color: black; /* Define a cor de fundo como preto */
-            border: none; /* Remove a borda */
-            margin: 0; /* Remove a margem */
-            padding: 0; /* Remove o preenchimento interno */
-        }
-    </style>
-    
-    <style>
-        /* Estilo para o botão */
-        #tela-cheia-button {
-            background-color: black; /* Define a cor de fundo como preto */
-            border: none; /* Remove a borda */
-            margin: 0; /* Remove a margem */
-            padding: 0; /* Remove o preenchimento interno */
-        }
-    </style>
-
-    <style>
-        /* Estilo para o botão */
-        #retrocede10s {
-            background-color: black; /* Define a cor de fundo como preto */
-            border: none; /* Remove a borda */
-            margin: 0; /* Remove a margem */
-            padding: 0; /* Remove o preenchimento interno */
-        }
-    </style>
-    
-        <style>
-        /* Estilo para o botão */
-        #avanca10s {
-            background-color: black; /* Define a cor de fundo como preto */
-            border: none; /* Remove a borda */
-            margin: 0; /* Remove a margem */
-            padding: 0; /* Remove o preenchimento interno */
-        }
-    </style>
-    
-     <style>
-        /* Estilo para o botão */
-        #mostrar-controle {
-            background-color: black; /* Define a cor de fundo como preto */
-            border: none; /* Remove a borda */
-            margin: 0; /* Remove a margem */
-            padding: 0; /* Remove o preenchimento interno */
-        }
-
-
-    </style>
-    <style>
-  /* Estilize a tabela para ocupar 100% da largura da página */
-  table {
-    width: 100%;
-  }
-  /* Estilize as células da tabela para não ter espaçamento e alinhar as imagens ao centro */
-  td {
-    padding: 5;
-    text-align: 
-  }
-  /* Estilize as imagens para ocupar 100% da largura da célula */
-  img {
-    width: 100%;
-    height: auto;
-  }
-</style>
-    
-</head>
-<body>
- <div class="container">
- <table id="tabela-video" style="width: 100%;">
-  <tr>
-   <td>
-    <!-- Player de vídeo -->
-    <video id="video-player" class="video-player" controls autoplay onended="playNext()" preload="metadata">
-        <!-- Adiciona os atributos autoplay, onended e preload -->
-        <!-- Vídeo padrão -->
-        <source src="https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/01_A_morte.mp4" type="video/mp4">
-            Seu navegador não suporta o elemento de vídeo.
-    </video>
-    <div>
-        <input id="range" type="range" value="0" max="1000" style="width: 100%;">
-    </div>
-    <table id="BtnCtrl">
-<button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button id="retrocede10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Voltar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button id="previousBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Voltar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button id="nextBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button id="avanca10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button id="tela-cheia-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tela.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<button class="OctPlay"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>  
-<button id="mostrar-controle"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Volume.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>
-<input type="range" id="controle-volume" min="0" max="1" step="0.01" value="1" style="display: none;">
-	  <table>
-  <tr>
-    <td>
-      <a href="https://cirosblack.github.io/jaspion">
-        <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Jaspion%20poster.png" alt="Jaspion">
-      </a>
-    </td>
-    <td>
-      <a href="https://cirosblack.github.io/changeman">
-        <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/ChangemanPoster.png" alt="Yu Yu Changeman">
-      </a>
-    </td>
-    <td>
-      <a href="https://cirosblack.github.io/flashman">
-        <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/FlashmanPoster.png" alt="Flashman">
-      </a>
-    </td>
-    <td>
-      <a href="https://cirosblack.github.io/YuYuHakusho">
-        <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/YuYuHakusho%20poster.png" alt="Yu Yu Hakusho">
-      </a>
-    </td>
-<td>
-      <a href="https://cirosblack.github.io/Bleach">
-        <img src="https://raw.githubusercontent.com/CirosBlack/Bleach/main/Poster.Bleach.png" alt="Bleach">
-      </a>
-    </td>
-  </tr>
-</table>
-</table>
-   </td>
-  </tr>
-
-    </table>
-    
-    <table id="tabela-playlist" style="width: 100%;">
-     <!-- Playlist -->
-    <ul id="playlist" class="playlist">
-        <!-- Adiciona o atributo id -->
-        <!-- Itens da playlist -->
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/01_A_morte.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_morte.jpg">A Morte</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/02_No_mundo_Espiritual_Teste_da_Ressurreicao.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/No_Mundo_Espiritual_-_Teste_da_Ressurreicao.jpg">No Mundo Espiritual - Teste da Ressurreição</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/03_A_Promessa_de_um_Homem.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Promessa_de_um_Homem.jpg">A Promessa de um Homem</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/04_O_Fogo_Ardente.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Fogo_Ardente.jpg">O Fogo Ardente</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/05_A_Ressurreicao_A_Nova_Missao.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Ressurreicao_A_Nova_Missao.jpg">A Ressurreição - A Nova Missão</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/06_Os_Misteriosos_Ladroes_Hiei_Kurama_e_Gouki.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Os_Misteriosos_Ladroes_Hiei_Kurama_e_Gouki.jpg">Os Misteriosos Ladrões: Hiei, Kurama e Gouki</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/07_O_Segredo_de_Kurama.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Segredo_de_Kurama.jpg">O Segredo de Kurama</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/08_O_Rapto_de_Keiko.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Rapto_de_Keiko.jpg">O Rapto de Keiko</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/09_O_Sucessor.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Sucessor.jpg">O Sucessor</a>
-        </li>
-        <li>
-            <a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/10_A_Batalha_na_Escuridao.mp4')">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Batalha_na_Escuridao.jpg">A Batalha na Escuridão</a>
-        </li>
-    </ul>
-    </table>
-    
-    <script>
-    	
-  // Função para ocultar e mostrar um elemento pelo seu id ou classe
-function ocultarMostrarElemento (seletor) {
-  // Seleciona o elemento pelo seu seletor
-  var elemento = document.querySelector (seletor);
-  // Verifica o estado atual do elemento
-  var display = elemento.style.display;
-  // Alterna entre ocultar e mostrar
-  if (display == "none") {
-    elemento.style.display = "block";
-  } else {
-    elemento.style.display = "none";
-  }
-}
-
-// Seleciona o botão e a playlist pelo seu id ou classe
-var botao = document.querySelector(".OctPlay");
-var playlist = document.querySelector("#playlist");
-
-// Define as imagens para mostrar e ocultar a playlist
-var mostrar = "https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Mostar_Playlist.png";
-var ocultar = "https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png";
-
-// Adiciona um evento de clique ao botão
-botao.addEventListener("click", function() {
-  // Alterna a visibilidade da playlist
-  playlist.classList.toggle("playlist");
-  // Muda a imagem do botão de acordo com o estado da playlist
-  if (playlist.classList.contains("playlist")) {
-    botao.src = ocultar;
-    // Chama a função para ocultar a tabela, a lista e as miniaturas
-    ocultarMostrarElemento ("#tabela-playlist");
-    ocultarMostrarElemento ("#playlist");
-    ocultarMostrarElemento (".thumb");
-  } else {
-    botao.src = mostrar;
-    // Chama a função para mostrar a tabela, a lista e as miniaturas
-    ocultarMostrarElemento ("#tabela-playlist");
-    ocultarMostrarElemento ("#playlist");
-    ocultarMostrarElemento (".thumb");
-  }
-});
-
-</script>
-    
-    <script>
-  // Obtém os elementos do HTML
-var videoPlayer = document.getElementById("video-player");
-var mostrarControle = document.getElementById("mostrar-controle");
-var controleVolume = document.getElementById("controle-volume");
-
-// Define uma função para mostrar ou esconder o controle de volume
-function toggleControle() {
-  // Se o controle de volume estiver visível, esconde ele
-  if (controleVolume.style.display == "block") {
-    controleVolume.style.display = "none";
-  }
-  // Se o controle de volume estiver escondido, mostra ele
-  else {
-    controleVolume.style.display = "block";
-  }
-}
-
-// Adiciona um evento de click ao botão mostrar-controle
-mostrarControle.addEventListener("click", toggleControle);
-
-// Adiciona um evento de input ao controle de volume
-controleVolume.addEventListener("input", function() {
-  // Altera o volume do video-player de acordo com o valor do controle de volume
-  videoPlayer.volume = controleVolume.value;
-});
-
-    	</script>
-    
-    <script>
-// Obtém os elementos do HTML
-var videoPlayer = document.getElementById("video-player");
-var previousBtn = document.getElementById("previousBtn");
-var nextBtn = document.getElementById("nextBtn");
-var playlist = document.getElementById("playlist");
-
-// Cria um array com os URLs dos vídeos
-var videos = [];
-for (var i = 0; i < playlist.children.length; i++) {
-  var videoUrl = playlist.children[i].children[0].getAttribute("onclick").slice(11, -2);
-  videos.push(videoUrl);
-}
-
-// Define o índice do vídeo atual
-var currentIndex = 0;
-
-// Define uma função para avançar para o próximo vídeo
-function playNext() {
-  // Incrementa o índice
-  currentIndex++;
-  // Se o índice for maior que o tamanho do array, volta para o primeiro vídeo
-  if (currentIndex >= videos.length) {
-    currentIndex = 0;
-  }
-  // Altera o atributo src do video-player para o próximo vídeo
-  videoPlayer.setAttribute("src", videos[currentIndex]);
-}
-
-// Define uma função para voltar para o vídeo anterior
-function playPrevious() {
-  // Decrementa o índice
-  currentIndex--;
-  // Se o índice for menor que zero, vai para o último vídeo
-  if (currentIndex < 0) {
-    currentIndex = videos.length - 1;
-  }
-  // Altera o atributo src do video-player para o vídeo anterior
-  videoPlayer.setAttribute("src", videos[currentIndex]);
-}
-
-// Adiciona eventos de clique aos botões
-previousBtn.addEventListener("click", playPrevious);
-nextBtn.addEventListener("click", playNext);
-
-</script>
-    
-    <script>
-     // Obtenha o elemento de vídeo e o botão
-        var meuVideo = document.getElementById("video-player");
-        var botaoAvanca10s = document.getElementById("avanca10s");
-
-        // Adicione um evento de clique ao botão
-        botaoAvanca10s.addEventListener("click", function() {
-            // Avance o vídeo em 10 segundos
-            meuVideo.currentTime += 10;
-        });
-    </script>
-    
-    <script>
-        // Obtenha o elemento de vídeo e o botão
-        var meuVideo = document.getElementById("video-player");
-        var botaoRetrocede10s = document.getElementById("retrocede10s");
-
-        // Adicione um evento de clique ao botão
-        botaoRetrocede10s.addEventListener("click", function() {
-            // Retroceda o vídeo em 10 segundos
-            meuVideo.currentTime -= 10;
-        });
-    </script>
-    
-    <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const playButton = document.getElementById("play-button");
-    const telaCheiaButton = document.getElementById("tela-cheia-button");
-    const volumeRange = document.getElementById("volume-range");
-    const videoPlayer = document.getElementById("video-player");
-
-    playButton.addEventListener("click", function() {
-      if (videoPlayer.paused) {
-        videoPlayer.play();
-        playButton.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Pause.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';
-                } else {
-        videoPlayer.pause();
-                    playButton.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;">';
-                }
-		   });
-    
-    telaCheiaButton.addEventListener("click", function() {
-      if (videoPlayer.requestFullscreen) {
-        videoPlayer.requestFullscreen();
-      } else if (videoPlayer.mozRequestFullScreen) { // Firefox
-        videoPlayer.mozRequestFullScreen();
-      } else if (videoPlayer.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        videoPlayer.webkitRequestFullscreen();
-      } else if (videoPlayer.msRequestFullscreen) { // IE/Edge
-        videoPlayer.msRequestFullscreen();
-      }
-    });
-
-    volumeRange.addEventListener("input", function() {
-      videoPlayer.volume = volumeRange.value;
-    });
-  });
-  </script>
-  
-  <script>
-        const botaoMostrar = document.getElementById('mostrar-controle');
-        const controleVolume = document.getElementById('volume-range');
-
-        botaoMostrar.addEventListener('click', () => {
-            if (controleVolume.style.opacity === '0') {
-                controleVolume.style.opacity = '1';
-            } else {
-                controleVolume.style.opacity = '0';
-            }
-        });
-    </script>
-    
-    <script>
-// JavaScript desabilita o mouse no vídeo  	
-var video = document.getElementById("video-player");
-video.addEventListener('contextmenu', event => event.preventDefault());
-
-
-     // JavaScript Range Barra de progresso 
-        var video = document.getElementById("video-player");
-        var range = document.getElementById("range");
-        video.controls = false; // desabilita os controles padrões do vídeo
-        range.addEventListener("mousedown", function(event) {
-          video.pause(); // pausa o vídeo quando o usuário clica no range
-        });
-        range.addEventListener("change", function(event) {
-          video.currentTime = range.value / range.max * video.duration; // altera o tempo do vídeo de acordo com o valor do range
-          video.play(); // reproduz o vídeo
-        });
-        video.addEventListener("timeupdate", function(event) {
-          var position = this.currentTime / this.duration; // calcula a posição atual do vídeo em relação à duração
-          range.value = position * 1000; // atualiza o valor do range
-        });
-        
-         // Chama a função quando o vídeo é carregado
-        player.addEventListener("loadedmetadata", adjustPlaylistHeight);
-        // Chama a função quando o vídeo é alterado
-        player.addEventListener("srcchange", adjustPlaylistHeight);
-        
-        // Função para trocar o vídeo atual pelo selecionado na playlist
-        function playVideo(url) {
-          // Obtém o elemento do player de vídeo
-          var player = document.getElementById("video-player");
-          // Altera o atributo src do player para o url do vídeo
-          player.src = url;
-          // Reproduz o vídeo
-          player.play();
-        }
-        
-        // Função para reproduzir o próximo vídeo da playlist
-        function playNext() {
-          // Obtém o elemento do player de vídeo
-          var player = document.getElementById("video-player");
-          // Obtém o elemento da playlist
-          var playlist = document.getElementById("playlist");
-          // Obtém os itens da playlist
-          var items = playlist.getElementsByTagName("li");
-          // Percorre os itens da playlist
-          for (var i = 0; i < items.length; i++) {
-            // Obtém o link do item atual
-            var link = items[i].getElementsByTagName("a")[0];
-            // Verifica se o link corresponde ao vídeo atual
-            if (link.getAttribute("onclick").includes(player.src)) {
-              // Verifica se há um próximo item
-              if (i < items.length - 1) {
-                // Obtém o link do próximo item
-                var nextLink = items[i + 1].getElementsByTagName("a")[0];
-                // Obtém o url do próximo vídeo
-                var nextUrl = nextLink.getAttribute("onclick").split("'")[1];
-                // Reproduz o próximo vídeo
-                playVideo(nextUrl);
-                // Sai do loop
-                break;                
-              }
-            }
-          }
-        }
-        
-        
-    </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="pt"><head> <meta charset="UTF-8"> <title>CirosBlack - Yu Yu Hakusho</title> <style>  body {           font-family: "Arial Black", Arial, sans-serif;             font-weight: bold;              text-transform: uppercase;             color: #fff;           background-color: #1C1C1C;          }                 .playlist {              width: 95%;           height: 100%;          overflow: auto;            background-color: black;            color: #fff;           padding: 10px;	      margin-top: 0;		  margin: 0;		padding: 0;        }                 .playlist ul {           list-style-type: none;            padding-left: 0;             margin-top: 0;          }               .playlist a {           display: flex;           align-items: center;          margin-bottom: 5px;          background-color: #1C1C1C;          padding: 5px;          cursor: pointer;            text-decoration: none;            border-radius: 10px;            border: 1px solid #fff;              color: #ccc;    	  width: 100%;        }            .playlist a:hover {          background-color: #666;        }            .playlist a.selected {          background-color: #800000;          color: #fff;          border-color: #fff;        }              .playlist video {          width: 100%;             height: 0;              padding-bottom: 75%;            border-radius: 10px;              border: 1px solid #fff;            }             .playlist .thumbnail {          width: 100px;          height: 70px;          margin-right: 10px;          border-radius: 5%;          object-fit: cover;        }@media screen and (orientation:portrait) {  /* Esconde os elementos em modo retrato */  #tabela-playlist, #playlist, .thumb {    display: none;  }}@media screen and (orientation:landscape) {  /* Mostra os elementos em modo paisagem */  #tabela-playlist, #playlist, .thumb {    display: block;  }}        #video-player::-webkit-media-controls {  display: none !important;}                     /* Estilo do player de vídeo */    .video-player {      width: 100%; /* Ocupa 100% da largura da página */      height: auto; /* Ajusta a altura proporcionalmente */ 	 top: 0;  	left: 0;      margin-top: 0; /* adicionando essa linha */}    }    /* Estilo da playlist */    .playlist {      width: 100%; /* Ocupa 100% da largura da página */      height: auto; /* Ajusta a altura proporcionalmente */      overflow-y: scroll; /* Permite rolar na vertical */      list-style: none; /* Remove os marcadores dos itens */      margin: 0; /* Remove as margens */      padding: 0; /* Remove o espaçamento interno */    }        /* Estilo dos itens da playlist */    .playlist li {      display: flex; /* Organiza os elementos em linha */      align-items: center; /* Alinha os elementos verticalmente */      border-bottom: 1px solid #ccc; /* Adiciona uma borda inferior */    }        /* Estilo das imagens da playlist */    .playlist img {      width: 150px; /* Largura fixa */      height: auto; /* Ajusta a altura proporcionalmente */      margin-right: 10px; /* Espaçamento à direita */    }        </style><style>  /* Define o container 100% um grid */  .container {    display: grid;  }  /* Define a largura das colunas em modo paisagem */  @media (orientation: landscape) {    .container {      grid-template-columns: 100% 30%;      grid-gap: 10px;    }  }  /* Define a altura das linhas */  .container > table {    grid-template-rows: auto;  }  /* Define os estilos das tabelas */  table {    border: 1px solid black;    border-collapse: collapse;  }  th, td {    border: 1px solid black;    padding: 5px;  }    #tabela-video {  width: 100%;  height: 50%; /* adicionando essa linha */}</style><style>    .OctPlay {    	float: right;      background-color: black; /* Define a cor de fundo como preto */            border: none; /* Remove a borda */            margin: 0; /* Remove a margem */            padding: 0; /* Remove o preenchimento interno */    }  </style><style>        /* Estilo para o botão */        #play-button {            background-color: black; /* Define a cor de fundo como preto */            border: none; /* Remove a borda */            margin: 0; /* Remove a margem */            padding: 0; /* Remove o preenchimento interno */        }    </style>        <style>        /* Estilo para o botão */        #previousBtn {            background-color: black; /* Define a cor de fundo como preto */            border: none; /* Remove a borda */            margin: 0; /* Remove a margem */            padding: 0; /* Remove o preenchimento interno */        }    </style>            <style>        /* Estilo para o botão */        #nextBtn {            background-color: black; /* Define a cor de fundo como preto */            border: none; /* Remove a borda */            margin: 0; /* Remove a margem */            padding: 0; /* Remove o preenchimento interno */        }    </style>        <style>        /* Estilo para o botão */        #tela-cheia-button {            background-color: black; /* Define a cor de fundo como preto */            border: none; /* Remove a borda */            margin: 0; /* Remove a margem */            padding: 0; /* Remove o preenchimento interno */        }    </style>    <style>        /* Estilo para o botão */        #retrocede10s {            background-color: black; /* Define a cor de fundo como preto */            border: none; /* Remove a borda */            margin: 0; /* Remove a margem */            padding: 0; /* Remove o preenchimento interno */        }    </style>            <style>        /* Estilo para o botão */        #avanca10s {            background-color: black; /* Define a cor de fundo como preto */            border: none; /* Remove a borda */            margin: 0; /* Remove a margem */            padding: 0; /* Remove o preenchimento interno */        }    </style>         <style>        /* Estilo para o botão */        #mostrar-controle {            background-color: black; /* Define a cor de fundo como preto */            border: none; /* Remove a borda */            margin: 0; /* Remove a margem */            padding: 0; /* Remove o preenchimento interno */        }    </style>    <style>  /* Estilize a tabela para ocupar 100% da largura da página */  table {    width: 100%;  }  /* Estilize as células da tabela para não ter espaçamento e alinhar as imagens ao centro */  td {    padding: 5;    text-align:   }  /* Estilize as imagens para ocupar 100% da largura da célula */  img {    width: 100%;    height: auto;  }</style>    </head><body> <div class="container"> <table id="tabela-video" style="width: 100%;">  <tr>   <td>    <!-- Player de vídeo -->    <video id="video-player" class="video-player" controls autoplay onended="playNext()" preload="metadata">        <!-- Adiciona os atributos autoplay, onended e preload -->        <!-- Vídeo padrão -->        <source src="https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/01_A_morte.mp4" type="video/mp4">            Seu navegador não suporta o elemento de vídeo.    </video>    <div>        <input id="range" type="range" value="0" max="1000" style="width: 100%;">    </div>    <table id="BtnCtrl"><button id="play-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button><button id="retrocede10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Voltar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button><button id="previousBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Voltar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button><button id="nextBtn"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button><button id="avanca10s"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Avancar_10_segundos.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button><button id="tela-cheia-button"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tela.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button><button class="OctPlay"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button>  <button id="mostrar-controle"><img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Volume.png" alt="Ícone Play" style="width: 50px; height: 50px;"></button><input type="range" id="controle-volume" min="0" max="1" step="0.01" value="1" style="display: none;">	  <table>  <tr>    <td>      <a href="https://cirosblack.github.io/jaspion">        <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Jaspion%20poster.png" alt="Jaspion">      </a>    </td>    <td>      <a href="https://cirosblack.github.io/changeman">        <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/ChangemanPoster.png" alt="Yu Yu Changeman">      </a>    </td>    <td>      <a href="https://cirosblack.github.io/flashman">        <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/FlashmanPoster.png" alt="Flashman">      </a>    </td>    <td>      <a href="https://cirosblack.github.io/YuYuHakusho">        <img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/YuYuHakusho%20poster.png" alt="Yu Yu Hakusho">      </a>    </td><td>      <a href="https://cirosblack.github.io/Bleach">        <img src="https://raw.githubusercontent.com/CirosBlack/Bleach/main/Poster.Bleach.png" alt="Bleach">      </a>    </td>  </tr></table></table>   </td>  </tr>    </table>        <div id="tabela-playlist" style="width: 100%; height: 70%;">     <!-- Playlist -->    <ul id="playlist" class="playlist" style="width: 100%;">        <!-- Adiciona o atributo id -->        <!-- Itens da playlist --> <li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/01_A_morte.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_morte.jpg">A Morte</a></li> <li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/02_No_mundo_Espiritual_Teste_da_Ressurreicao.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/No_Mundo_Espiritual_-_Teste_da_Ressurreicao.jpg">No Mundo Espiritual - Teste da Ressurreição</a></li> <li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/03_A_Promessa_de_um_Homem.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Promessa_de_um_Homem.jpg">A Promessa de um Homem</a></li> <li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/04_O_Fogo_Ardente.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Fogo_Ardente.jpg">O Fogo Ardente</a></li> <li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/05_A_Ressurreicao_A_Nova_Missao.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Ressurreicao_A_Nova_Missao.jpg">A Ressurreição - A Nova Missão</a></li> <li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/06_Os_Misteriosos_Ladroes_Hiei_Kurama_e_Gouki.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Os_Misteriosos_Ladroes_Hiei_Kurama_e_Gouki.jpg">Os Misteriosos Ladrões: Hiei, Kurama e Gouki</a></li> <li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/07_O_Segredo_de_Kurama.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Segredo_de_Kurama.jpg">O Segredo de Kurama</a></li> <li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/08_O_Rapto_de_Keiko.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Rapto_de_Keiko.jpg">O Rapto de Keiko</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/09_O_Sucessor.mp4'')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Sucessor.jpg">O Sucessor</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/10_A_Batalha_na_Escuridao.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Batalha_na_Escuridao.jpg">A Batalha na Escuridão</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/11_A_Dura_Batalha.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Dura_Batalha.jpg"> A Dura Batalha</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/12_A_Derrota_de_Kuwabara.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Derrota_de_Kuwabara.jpg"> A Derrota de Kuwabara</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/13_Yusuke_versus_Lando.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Yusuke_versus_Lando.jpg"> Yusuke versus Lando</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/14_Desafio_ao_Mundo_do_Alem.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Desafio_ao_Mundo_do_Alem.jpg"> Desafio ao Mundo do Além</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/15_A_Danca_da_Rosa.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Danca_da_Rosa.jpg"> A Dança da Rosa</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/16_A_Luta_do_Machao_Kuwabara.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Luta_do_Machao_Kuwabara.jpg"> A Luta do Machão Kuwabara</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/17_Byakku_no_Inferno.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Byakku_no_Inferno.jpg"> Byakku no Inferno</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/18_A_Furia_de_Hiei.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/A_Furia_de_Hiei.jpg"> A Fúria de Hiei</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/19_O_Ultimo_Monstro_Suzaku.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Ultimo_Monstro_Suzaku.jpg"> O Último Monstro, Suzaku</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/20_O_Incrivel_Suzaku.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Incrivel_Suzaku.jpg"> O Incrível Suzaku</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/21_Yusuke_A_Dura_Batalha.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Yusuke_A_Dura_Batalha.jpg"> Yusuke, A Dura Batalha</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/22_Yukina_A_Triste_Garota.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Yukina_A_Triste_Garota.jpg"> Yukina, A Triste Garota</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/23_Os_Mensageiros_das_Trevas.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Os_Mensageiros_das_Trevas.jpg"> Os Mensageiros das Trevas</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/24_Tres_Monstros_Terriveis_Inimigos.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Tres_Monstros_Terriveis_Inimigos.jpg"> Três Monstros - Terríveis Inimigos</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/25_Kuwabara_Arde_por_Amor.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Kuwabara_Arde_por_Amor.jpg"> Kuwabara Arde por Amor</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/26_Convite_ao_Torneio_das_Trevas.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Convite_ao_Torneio_das_Trevas.jpg"> Convite ao Torneio das Trevas</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/27_Partida_para_a_Ilha_das_Trevas.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Partida_para_a_Ilha_das_Trevas.jpg"> Partida para a Ilha das Trevas</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/28_O_Pequeno_e_Terrivel_Inimigo_Linko.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/O_Pequeno_e_Terrivel_Inimigo_Linko.jpg"> O Pequeno e Terrível Inimigo Linko</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/29_Kurama_e_o_seu_Golpe_da_Flor.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Kurama_e_o_seu_Golpe_da_Flor.jpg"> Kurama e o seu Golpe da Flor</a></li><li><a href="#" onclick="playVideo('https://huggingface.co/datasets/Ciros/YuYuHakusho/resolve/main/30_As_Chamas_Mortais.mp4')"> <img class="thumbnail" src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/As_Chamas_Mortais.jpg"> As Chamas Mortais</a></li>    </ul>    </div>        <script>    	  // Função para ocultar e mostrar um elemento pelo seu id ou classefunction ocultarMostrarElemento (seletor) {  // Seleciona o elemento pelo seu seletor  var elemento = document.querySelector (seletor);  // Verifica o estado atual do elemento  var display = elemento.style.display;  // Alterna entre ocultar e mostrar  if (display == "none") {    elemento.style.display = "block";  } else {    elemento.style.display = "none";  }}// Seleciona o botão e a playlist pelo seu id ou classevar botao = document.querySelector(".OctPlay");var playlist = document.querySelector("#playlist");// Define as imagens para mostrar e ocultar a playlistvar mostrar = "https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Mostar_Playlist.png";var ocultar = "https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Ocultar_Playlist.png";// Adiciona um evento de clique ao botãobotao.addEventListener("click", function() {  // Alterna a visibilidade da playlist  playlist.classList.toggle("playlist");  // Muda a imagem do botão de acordo com o estado da playlist  if (playlist.classList.contains("playlist")) {    botao.src = ocultar;    // Chama a função para ocultar a tabela, a lista e as miniaturas    ocultarMostrarElemento ("#tabela-playlist");    ocultarMostrarElemento ("#playlist");    ocultarMostrarElemento (".thumb");  } else {    botao.src = mostrar;    // Chama a função para mostrar a tabela, a lista e as miniaturas    ocultarMostrarElemento ("#tabela-playlist");    ocultarMostrarElemento ("#playlist");    ocultarMostrarElemento (".thumb");  }});</script>        <script>  // Obtém os elementos do HTMLvar videoPlayer = document.getElementById("video-player");var mostrarControle = document.getElementById("mostrar-controle");var controleVolume = document.getElementById("controle-volume");// Define uma função para mostrar ou esconder o controle de volumefunction toggleControle() {  // Se o controle de volume estiver visível, esconde ele  if (controleVolume.style.display == "block") {    controleVolume.style.display = "none";  }  // Se o controle de volume estiver escondido, mostra ele  else {    controleVolume.style.display = "block";  }}// Adiciona um evento de click ao botão mostrar-controlemostrarControle.addEventListener("click", toggleControle);// Adiciona um evento de input ao controle de volumecontroleVolume.addEventListener("input", function() {  // Altera o volume do video-player de acordo com o valor do controle de volume  videoPlayer.volume = controleVolume.value;});    	</script>        <script>// Obtém os elementos do HTMLvar videoPlayer = document.getElementById("video-player");var previousBtn = document.getElementById("previousBtn");var nextBtn = document.getElementById("nextBtn");var playlist = document.getElementById("playlist");// Cria um array com os URLs dos vídeosvar videos = [];for (var i = 0; i < playlist.children.length; i++) {  var videoUrl = playlist.children[i].children[0].getAttribute("onclick").slice(11, -2);  videos.push(videoUrl);}// Define o índice do vídeo atualvar currentIndex = 0;// Define uma função para avançar para o próximo vídeofunction playNext() {  // Incrementa o índice  currentIndex++;  // Se o índice for maior que o tamanho do array, volta para o primeiro vídeo  if (currentIndex >= videos.length) {    currentIndex = 0;  }  // Altera o atributo src do video-player para o próximo vídeo  videoPlayer.setAttribute("src", videos[currentIndex]);}// Define uma função para voltar para o vídeo anteriorfunction playPrevious() {  // Decrementa o índice  currentIndex--;  // Se o índice for menor que zero, vai para o último vídeo  if (currentIndex < 0) {    currentIndex = videos.length - 1;  }  // Altera o atributo src do video-player para o vídeo anterior  videoPlayer.setAttribute("src", videos[currentIndex]);}// Adiciona eventos de clique aos botõespreviousBtn.addEventListener("click", playPrevious);nextBtn.addEventListener("click", playNext);</script>        <script>     // Obtenha o elemento de vídeo e o botão        var meuVideo = document.getElementById("video-player");        var botaoAvanca10s = document.getElementById("avanca10s");        // Adicione um evento de clique ao botão        botaoAvanca10s.addEventListener("click", function() {            // Avance o vídeo em 10 segundos            meuVideo.currentTime += 10;        });    </script>        <script>        // Obtenha o elemento de vídeo e o botão        var meuVideo = document.getElementById("video-player");        var botaoRetrocede10s = document.getElementById("retrocede10s");        // Adicione um evento de clique ao botão        botaoRetrocede10s.addEventListener("click", function() {            // Retroceda o vídeo em 10 segundos            meuVideo.currentTime -= 10;        });    </script>        <script>  document.addEventListener("DOMContentLoaded", function() {    const playButton = document.getElementById("play-button");    const telaCheiaButton = document.getElementById("tela-cheia-button");    const volumeRange = document.getElementById("volume-range");    const videoPlayer = document.getElementById("video-player");    playButton.addEventListener("click", function() {      if (videoPlayer.paused) {        videoPlayer.play();        playButton.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Pause.png" alt="Ícone Pausar" style="width: 50px; height: 50px;">';                } else {        videoPlayer.pause();                    playButton.innerHTML = '<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/main/Play.png" alt="Ícone Play" style="width: 50px; height: 50px;">';                }		   });        telaCheiaButton.addEventListener("click", function() {      if (videoPlayer.requestFullscreen) {        videoPlayer.requestFullscreen();      } else if (videoPlayer.mozRequestFullScreen) { // Firefox        videoPlayer.mozRequestFullScreen();      } else if (videoPlayer.webkitRequestFullscreen) { // Chrome, Safari and Opera        videoPlayer.webkitRequestFullscreen();      } else if (videoPlayer.msRequestFullscreen) { // IE/Edge        videoPlayer.msRequestFullscreen();      }    });    volumeRange.addEventListener("input", function() {      videoPlayer.volume = volumeRange.value;    });  });  </script>    <script>        const botaoMostrar = document.getElementById('mostrar-controle');        const controleVolume = document.getElementById('volume-range');        botaoMostrar.addEventListener('click', () => {            if (controleVolume.style.opacity === '0') {                controleVolume.style.opacity = '1';            } else {                controleVolume.style.opacity = '0';            }        });    </script>        <script>// JavaScript desabilita o mouse no vídeo  	var video = document.getElementById("video-player");video.addEventListener('contextmenu', event => event.preventDefault());     // JavaScript Range Barra de progresso         var video = document.getElementById("video-player");        var range = document.getElementById("range");        video.controls = false; // desabilita os controles padrões do vídeo        range.addEventListener("mousedown", function(event) {          video.pause(); // pausa o vídeo quando o usuário clica no range        });        range.addEventListener("change", function(event) {          video.currentTime = range.value / range.max * video.duration; // altera o tempo do vídeo de acordo com o valor do range          video.play(); // reproduz o vídeo        });        video.addEventListener("timeupdate", function(event) {          var position = this.currentTime / this.duration; // calcula a posição atual do vídeo em relação à duração          range.value = position * 1000; // atualiza o valor do range        });                 // Chama a função quando o vídeo é carregado        player.addEventListener("loadedmetadata", adjustPlaylistHeight);        // Chama a função quando o vídeo é alterado        player.addEventListener("srcchange", adjustPlaylistHeight);                // Função para trocar o vídeo atual pelo selecionado na playlist        function playVideo(url) {          // Obtém o elemento do player de vídeo          var player = document.getElementById("video-player");          // Altera o atributo src do player para o url do vídeo          player.src = url;          // Reproduz o vídeo          player.play();        }                // Função para reproduzir o próximo vídeo da playlist        function playNext() {          // Obtém o elemento do player de vídeo          var player = document.getElementById("video-player");          // Obtém o elemento da playlist          var playlist = document.getElementById("playlist");          // Obtém os itens da playlist          var items = playlist.getElementsByTagName("li");          // Percorre os itens da playlist          for (var i = 0; i < items.length; i++) {            // Obtém o link do item atual            var link = items[i].getElementsByTagName("a")[0];            // Verifica se o link corresponde ao vídeo atual            if (link.getAttribute("onclick").includes(player.src)) {              // Verifica se há um próximo item              if (i < items.length - 1) {                // Obtém o link do próximo item                var nextLink = items[i + 1].getElementsByTagName("a")[0];                // Obtém o url do próximo vídeo                var nextUrl = nextLink.getAttribute("onclick").split("'")[1];                // Reproduz o próximo vídeo                playVideo(nextUrl);                // Sai do loop                break;                              }            }          }        }                    </script></body></html>
