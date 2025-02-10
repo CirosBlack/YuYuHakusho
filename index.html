@@ -161,7 +161,7 @@
       border-radius: 5px;
       margin-top: 10px;
       scroll-behavior: smooth;
-      overflow-y: hidden; /* Oculta a barra de rolagem, mas mantém a funcionalidade */
+      overflow-y: auto; /* Corrigido para permitir rolagem no modo paisagem */
     }
 
     #videoTitle {
@@ -249,7 +249,7 @@
         margin-top: 0;
         margin-left: 0;
         height: 100%;
-        overflow: hidden; /* Oculta a barra de rolagem, mas mantém a funcionalidade */
+        overflow-y: auto; /* Corrigido para permitir rolagem */
       }
     }
 
@@ -528,6 +528,9 @@
       generatePlaylist();
       loadVideoByIndex(0);
       videoPlayer.play();  // Inicia o vídeo automaticamente
+      setTimeout(() => {
+        controlsOverlay.classList.add('hidden'); // Esconde os controles após 2 segundos
+      }, 2000);
     });
 
     videoPlayer.addEventListener('timeupdate', updateProgress);
@@ -632,58 +635,20 @@
       }
     });
 
-    // Controle para ocultar os controles após 2 segundos sem atividade
+    // Mostrar controles quando o mouse estiver sobre o vídeo
+    videoContainer.addEventListener('mouseenter', () => {
+      controlsOverlay.classList.remove('hidden');
+      clearTimeout(hideControlsTimeout);
+    });
+
+    // Esconder os controles após 2 segundos de inatividade
     let hideControlsTimeout;
-    function showControls() {
+    videoContainer.addEventListener('mousemove', () => {
       controlsOverlay.classList.remove('hidden');
       clearTimeout(hideControlsTimeout);
       hideControlsTimeout = setTimeout(() => {
-        hideControls();
+        controlsOverlay.classList.add('hidden');
       }, 2000);
-    }
-
-    function hideControls() {
-      if (!videoPlayer.paused) {
-        controlsOverlay.classList.add('hidden');
-      }
-    }
-
-    // Monitorar atividade do usuário (movimento do mouse ou clique)
-    videoContainer.addEventListener('mousemove', showControls);
-    videoContainer.addEventListener('touchstart', showControls);
-
-    // Controlando os controles durante a troca de fullscreen
-    document.addEventListener('fullscreenchange', () => {
-      if (document.fullscreenElement) {
-        controlsOverlay.classList.add('hidden');
-      } else {
-        controlsOverlay.classList.remove('hidden');
-      }
-    });
-
-    // Outros navegadores com prefixos
-    document.addEventListener('webkitfullscreenchange', () => {
-      if (document.webkitFullscreenElement) {
-        controlsOverlay.classList.add('hidden');
-      } else {
-        controlsOverlay.classList.remove('hidden');
-      }
-    });
-
-    document.addEventListener('mozfullscreenchange', () => {
-      if (document.mozFullScreen) {
-        controlsOverlay.classList.add('hidden');
-      } else {
-        controlsOverlay.classList.remove('hidden');
-      }
-    });
-
-    document.addEventListener('MSFullscreenChange', () => {
-      if (document.msFullscreenElement) {
-        controlsOverlay.classList.add('hidden');
-      } else {
-        controlsOverlay.classList.remove('hidden');
-      }
     });
   </script>
 </body>
