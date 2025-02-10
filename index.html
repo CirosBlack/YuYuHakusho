@@ -249,7 +249,7 @@
         margin-top: 0;
         margin-left: 0;
         height: 100%;
-        overflow: auto;
+        overflow: hidden; /* Oculta a barra de rolagem, mas mantém a funcionalidade */
       }
     }
 
@@ -454,7 +454,7 @@
 
     let currentIndex = 0;
     videoPlayer.removeAttribute('controls');
-    videoPlayer.volume = 1.0;
+    videoPlayer.volume = 1.0;  // Garantir que o volume está em 100%
 
     function generatePlaylist() {
       playlist.innerHTML = "";
@@ -649,9 +649,6 @@
     }
 
     // Monitorar atividade do usuário (movimento do mouse ou clique)
-    document.addEventListener('mousemove', showControls);
-    document.addEventListener('keydown', showControls);
-    document.addEventListener('touchstart', showControls);
     videoContainer.addEventListener('mousemove', showControls);
     videoContainer.addEventListener('touchstart', showControls);
 
