@@ -162,6 +162,7 @@
       margin-top: 10px;
       /* Para que a rolagem seja animada ao dar scroll */
       scroll-behavior: smooth;
+      overflow-y: hidden; /* Oculta a barra de rolagem, mas mantém a funcionalidade */
     }
 
     #videoTitle {
@@ -173,8 +174,6 @@
     .playlist-container ul {
       list-style: none;
       width: 100%;
-      /* Opcional: se quiser animação em qualquer mudança de scroll (apenas em browsers que suportam) */
-      scroll-behavior: smooth;
     }
 
     .playlist-container li {
@@ -221,17 +220,7 @@
     }
 
     :fullscreen .controls-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    :fullscreen .progress-wrapper {
-      width: 100%;
+      display: none; /* Esconde a barra de controles em tela cheia */
     }
 
     /* -------------------------
@@ -348,7 +337,6 @@
     const nextBtn = document.getElementById('nextBtn');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
 
-    // Define a lista de vídeos com os títulos atualizados
     const videos = [
   { src: "https://huggingface.co/datasets/CirosW/eXV5dWhha3VzaG8/resolve/main/001.mp4", title: "A Morte" },
   { src: "https://huggingface.co/datasets/CirosW/eXV5dWhha3VzaG8/resolve/main/002.mp4", title: "No mundo Espiritual - Teste da Ressurreição" },
@@ -464,13 +452,10 @@
   { src: "https://huggingface.co/datasets/CirosW/eXV5dWhha3VzaG8/resolve/main/112.mp4", title: "Para Sempre Yu Yu Hakusho" }
 ];
 
-
     let currentIndex = 0;
     videoPlayer.removeAttribute('controls');
     videoPlayer.volume = 1.0;
-    videoPlayer.autoplay = true;
 
-    // Gera lista no <ul id="playlist">
     function generatePlaylist() {
       playlist.innerHTML = "";
       videos.forEach((video, index) => {
@@ -483,7 +468,6 @@
       });
     }
 
-    // Carrega o vídeo pelo índice
     function loadVideoByIndex(index) {
       if (index < 0 || index >= videos.length) return;
       currentIndex = index;
@@ -491,13 +475,8 @@
       updateVideoTitle(currentIndex);
       videoPlayer.play().catch(() => {});
 
-      // Atualiza texto do botão
       playPauseBtn.textContent = videoPlayer.paused ? "Play" : "Pause";
-
-      // Marca o item atual na playlist
       highlightCurrentItem();
-
-      // Rola a playlist para mostrar o item atual no topo
       scrollPlaylistToCurrent();
     }
 
@@ -505,30 +484,20 @@
       videoTitle.textContent = videos[index].title || "Sem título";
     }
 
-    // Destaca o item atual
     function highlightCurrentItem() {
       const items = playlist.querySelectorAll('li');
-      items.forEach(li => {
-        li.classList.remove('playing');
-      });
+      items.forEach(li => li.classList.remove('playing'));
       const currentLi = playlist.querySelector(`li[data-index="${currentIndex}"]`);
-      if (currentLi) {
-        currentLi.classList.add('playing');
-      }
+      if (currentLi) currentLi.classList.add('playing');
     }
 
-    // Faz scroll suave para o item atual
     function scrollPlaylistToCurrent() {
       const currentLi = playlist.querySelector(`li[data-index="${currentIndex}"]`);
       if (currentLi) {
-        currentLi.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+        currentLi.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
-    // Formata tempo em MM:SS
     function formatTime(seconds) {
       if (isNaN(seconds) || seconds < 0) return "00:00";
       let min = Math.floor(seconds / 60);
@@ -555,17 +524,15 @@
       timeRemaining.textContent = formatTime(remainingTime);
     }
 
-    // Carrega playlist ao iniciar
     window.addEventListener('load', () => {
       generatePlaylist();
       loadVideoByIndex(0);
+      videoPlayer.play();  // Inicia o vídeo automaticamente
     });
 
-    // Atualiza barra de progresso
     videoPlayer.addEventListener('timeupdate', updateProgress);
     videoPlayer.addEventListener('loadedmetadata', updateProgress);
 
-    // Ao terminar um vídeo, vai pro próximo
     videoPlayer.addEventListener('ended', () => {
       const nextIndex = currentIndex + 1;
       if (nextIndex < videos.length) {
@@ -573,7 +540,6 @@
       }
     });
 
-    // Clique nos itens da playlist
     playlist.addEventListener('click', e => {
       if (e.target && e.target.tagName.toLowerCase() === 'li') {
         const index = parseInt(e.target.getAttribute('data-index'), 10);
@@ -581,7 +547,6 @@
       }
     });
 
-    // Scrubbing
     let isDragging = false;
     function getOffsetX(e) {
       if (e.type.startsWith('touch')) {
@@ -623,7 +588,6 @@
     window.addEventListener('mouseup', () => { isDragging = false; });
     window.addEventListener('touchend', () => { isDragging = false; });
 
-    // Botões de controle
     prevBtn.addEventListener('click', () => {
       const prevIndex = currentIndex - 1;
       if (prevIndex >= 0) loadVideoByIndex(prevIndex);
@@ -644,7 +608,6 @@
       }
     });
 
-    // Toggle tela cheia
     fullscreenBtn.addEventListener('click', () => {
       if (!document.fullscreenElement) {
         if (videoContainer.requestFullscreen) {
@@ -669,7 +632,7 @@
       }
     });
 
-    // Ocultar controles após 2s sem atividade (em qualquer modo), contanto que o vídeo esteja tocando.
+    // Controle para ocultar os controles após 2 segundos sem atividade
     let hideControlsTimeout;
     function showControls() {
       controlsOverlay.classList.remove('hidden');
@@ -685,47 +648,45 @@
       }
     }
 
-    function userActivity() {
-      showControls();
-    }
+    // Monitorar atividade do usuário (movimento do mouse ou clique)
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown', showControls);
+    document.addEventListener('touchstart', showControls);
+    videoContainer.addEventListener('mousemove', showControls);
+    videoContainer.addEventListener('touchstart', showControls);
 
-    // Monitorar atividade do usuário
-    document.addEventListener('mousemove', userActivity);
-    document.addEventListener('keydown', userActivity);
-    document.addEventListener('touchstart', userActivity);
-    videoContainer.addEventListener('mousemove', userActivity);
-    videoContainer.addEventListener('touchstart', userActivity);
-
-    // Sempre que entra ou sai de fullscreen, reseta o timer
-    [
-      'fullscreenchange',
-      'webkitfullscreenchange',
-      'mozfullscreenchange',
-      'MSFullscreenChange'
-    ].forEach(evt => {
-      document.addEventListener(evt, () => {
-        showControls();
-      });
+    // Controlando os controles durante a troca de fullscreen
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement) {
+        controlsOverlay.classList.add('hidden');
+      } else {
+        controlsOverlay.classList.remove('hidden');
+      }
     });
 
-    // Ao dar play/pause
-    videoPlayer.addEventListener('play', () => {
-      showControls();
-    });
-    videoPlayer.addEventListener('pause', () => {
-      // Em pausa, mantém controles visíveis (e cancela esconde)
-      showControls();
-      clearTimeout(hideControlsTimeout);
+    // Outros navegadores com prefixos
+    document.addEventListener('webkitfullscreenchange', () => {
+      if (document.webkitFullscreenElement) {
+        controlsOverlay.classList.add('hidden');
+      } else {
+        controlsOverlay.classList.remove('hidden');
+      }
     });
 
-    // Eventos fullscreen iOS (Safari)
-    videoPlayer.addEventListener('webkitbeginfullscreen', () => {
-      videoPlayer.controls = false;
-      showControls();
+    document.addEventListener('mozfullscreenchange', () => {
+      if (document.mozFullScreen) {
+        controlsOverlay.classList.add('hidden');
+      } else {
+        controlsOverlay.classList.remove('hidden');
+      }
     });
-    videoPlayer.addEventListener('webkitendfullscreen', () => {
-      videoPlayer.controls = false;
-      showControls();
+
+    document.addEventListener('MSFullscreenChange', () => {
+      if (document.msFullscreenElement) {
+        controlsOverlay.classList.add('hidden');
+      } else {
+        controlsOverlay.classList.remove('hidden');
+      }
     });
   </script>
 </body>
