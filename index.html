@@ -280,19 +280,6 @@
         margin-top: 5px;
       }
     }
-    /* Estilo personalizado para a barra de rolagem */
-    .playlist-container::-webkit-scrollbar {
-      width: 6px; /* Barra de rolagem fina */
-    }
-
-    .playlist-container::-webkit-scrollbar-track {
-      background: #000; /* Fundo da barra de rolagem */
-    }
-
-    .playlist-container::-webkit-scrollbar-thumb {
-      background: #0000; /* Cor vermelha escura para a rolagem */
-      border-radius: 10px;
-    }
   </style>
 </head>
 <body>
@@ -305,7 +292,7 @@
       x-webkit-airplay="allow"
       disablepictureinpicture
       controlslist="nodownload nofullscreen noremoteplayback noplaybackrate"
-      muted <!-- Mantenha o atributo muted para autoplay funcionar -->
+      muted  <!-- Inicialmente mudo para permitir autoplay -->
     ></video>
 
     <!-- CONTROLES SOBRE O VÍDEO -->
@@ -539,8 +526,11 @@
     window.addEventListener('load', () => {
       generatePlaylist();
       loadVideoByIndex(0);
+
+      // O truque para garantir o autoplay
       videoPlayer.play().then(() => {
-        // Após o vídeo começar a tocar, defina o volume para 100%
+        // Após o vídeo começar a tocar, remova o "muted" e defina o volume
+        videoPlayer.muted = false;
         videoPlayer.volume = 1.0;  // Garantir que o volume está em 100%
       }).catch((err) => {
         console.log("Erro ao tentar reproduzir o vídeo:", err);
