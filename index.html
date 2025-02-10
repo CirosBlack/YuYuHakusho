@@ -162,6 +162,7 @@
       margin-top: 10px;
       scroll-behavior: smooth;
       overflow-y: auto; /* Corrigido para permitir rolagem no modo paisagem */
+      height: 300px; /* Altura fixa para visualizar a rolagem */
     }
 
     #videoTitle {
@@ -279,6 +280,20 @@
       .controls-container button {
         margin-top: 5px;
       }
+    }
+
+    /* Estilo personalizado para a barra de rolagem */
+    .playlist-container::-webkit-scrollbar {
+      width: 6px; /* Barra de rolagem fina */
+    }
+
+    .playlist-container::-webkit-scrollbar-track {
+      background: #000; /* Fundo da barra de rolagem */
+    }
+
+    .playlist-container::-webkit-scrollbar-thumb {
+      background: #8B0000; /* Cor vermelha escura para a rolagem */
+      border-radius: 10px;
     }
   </style>
 </head>
