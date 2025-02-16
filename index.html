@@ -410,7 +410,7 @@
     const playImage = 'https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/refs/heads/main/Play.png';
     const pauseImage = 'https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/refs/heads/main/Pause.png';
     
-    // Playlist com apenas os 5 primeiros episódios
+     // Playlist com apenas os 5 primeiros episódios
     const videos = [
   { src: "https://huggingface.co/datasets/CirosW/eXV5dWhha3VzaG8/resolve/main/001.mp4", title: "A Morte" },
   { src: "https://huggingface.co/datasets/CirosW/eXV5dWhha3VzaG8/resolve/main/002.mp4", title: "No mundo Espiritual - Teste da Ressurreição" },
@@ -525,7 +525,6 @@
   { src: "https://huggingface.co/datasets/CirosW/eXV5dWhha3VzaG8/resolve/main/111.mp4", title: "A Decisão Final" },
   { src: "https://huggingface.co/datasets/CirosW/eXV5dWhha3VzaG8/resolve/main/112.mp4", title: "Para Sempre Yu Yu Hakusho" }
 ];
-
     
     let currentIndex = 0;
     videoPlayer.removeAttribute('controls');
@@ -540,6 +539,16 @@
         li.innerHTML = `<span class="episode-title">${video.title}</span>
                           <a href="${video.src}?download=true" class="download-btn" download>Download</a>`;
         playlist.appendChild(li);
+      });
+    }
+    
+    // Função para prevenir que o clique no botão de download propague para o LI
+    function addDownloadClickPrevention() {
+      const downloadButtons = document.querySelectorAll('.download-btn');
+      downloadButtons.forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+        });
       });
     }
     
@@ -607,6 +616,7 @@
     
     window.addEventListener('load', () => {
       generatePlaylist();
+      addDownloadClickPrevention();
       loadVideoByIndex(0);
       videoPlayer.play().then(() => {
         videoPlayer.muted = false;
@@ -629,8 +639,8 @@
       }
     });
     
+    // Evento na playlist para carregar o vídeo, exceto se for no botão de download
     playlist.addEventListener('click', e => {
-      // Verifica se foi clicado no item (evitando que o clique no botão de download interfira)
       if ((e.target && e.target.tagName.toLowerCase() === 'li') || 
           (e.target.parentElement && e.target.parentElement.tagName.toLowerCase() === 'li')) {
         const li = e.target.tagName.toLowerCase() === 'li' ? e.target : e.target.parentElement;
@@ -722,11 +732,10 @@
       }
     });
     
-    // Botão para alternar a exibição dos downloads usando a imagem informada
+    // Botão para alternar a exibição dos downloads
     toggleDownloadsBtn.addEventListener('click', () => {
       playlistContainer.classList.toggle('show-downloads');
       if (playlistContainer.classList.contains('show-downloads')) {
-        // Rotaciona a imagem 180° para indicar que pode ocultar
         toggleDownloadsBtn.innerHTML = `<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/refs/heads/main/down.png" alt="Ocultar Downloads" style="width:35px; height:35px; transform: rotate(180deg);">`;
       } else {
         toggleDownloadsBtn.innerHTML = `<img src="https://raw.githubusercontent.com/CirosBlack/YuYuHakusho/refs/heads/main/down.png" alt="Mostrar Downloads" style="width:35px; height:35px;">`;
